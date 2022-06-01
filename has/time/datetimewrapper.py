@@ -21,16 +21,16 @@
 
 import datetime
 from typing import Protocol
-from datetimeobject import Checkable
+from datetimeobject import DateTimeObject
 import datetimeobject
 
 class DateTimeFactory(Protocol):
-    def makedatetime(type: str) -> Checkable:
+    def makedatetime(type: str) -> DateTimeObject:
         pass
 
 class DateTimeFactoryImpl():  #Multiple conditional branches are only used for Factory
 
-    def makedatetime(self, type: str) -> Checkable:
+    def makedatetime(self, type: str) -> DateTimeObject:
         if (type == "year"):
             return datetimeobject.Year(1970)
 
@@ -51,9 +51,9 @@ class DateTimeFactoryImpl():  #Multiple conditional branches are only used for F
 
 class Date():
 
-    year: Checkable
-    month: Checkable
-    day: Checkable
+    year: DateTimeObject
+    month: DateTimeObject
+    day: DateTimeObject
     __nowdate: any
 
     def __injectdate(self, datetimefactory: DateTimeFactory):
@@ -64,22 +64,22 @@ class Date():
     def __getnowdate(self):
         self.__nowdate = datetime.datetime.now()
 
-    def check(self, year: int, month: int, day: int):
-        self.year.check(year)
-        self.month.check(month)
-        self.day.check(day)
+    def commit(self, year: int, month: int, day: int):
+        self.year.commit(year)
+        self.month.commit(month)
+        self.day.commit(day)
 
     def __getnowyear(self):
         year = int(self.__nowdate.strftime("%Y"))
-        self.year.check(year)
+        self.year.commit(year)
 
     def __getnowmonth(self):
         month = int(self.__nowdate.strftime("%m"))
-        self.month.check(month)
+        self.month.commit(month)
 
     def __getnowday(self):
         day = int(self.__nowdate.strftime("%d"))
-        self.day.check(day)
+        self.day.commit(day)
 
     def date(self):
         date: str = "{0} {1} {2}".format(self.year.year, self.month.month, self.day.day)
@@ -102,9 +102,9 @@ class Date():
 
 class Time():
 
-    hour: Checkable
-    minute: Checkable
-    second: Checkable
+    hour: DateTimeObject
+    minute: DateTimeObject
+    second: DateTimeObject
     __nowtime: any
 
     def __injecttime(self, datetimefactory: DateTimeFactory):
@@ -115,22 +115,22 @@ class Time():
     def __getnowtime(self):
         self.__nowtime = datetime.datetime.now()
 
-    def check(self, hour: int, minute: int, second: float):
-        self.hour.check(hour)
-        self.minute.check(minute)
-        self.second.check(second)
+    def commit(self, hour: int, minute: int, second: float):
+        self.hour.commit(hour)
+        self.minute.commit(minute)
+        self.second.commit(second)
 
     def __getnowhour(self):
         hour = int(self.__nowtime.strftime("%H"))
-        self.hour.check(hour)
+        self.hour.commit(hour)
 
     def __getnowminute(self):
         minute = int(self.__nowtime.strftime("%M"))
-        self.minute.check(minute)
+        self.minute.commit(minute)
 
     def __getnowsecond(self):
         second = float(self.__nowtime.strftime("%S.%f"))
-        self.second.check(second)
+        self.second.commit(second)
 
     def time(self):
         time: str = "{0} {1} {2}".format(self.hour.hour, self.minute.minute, self.second.second)
@@ -162,9 +162,9 @@ class DateTime():
     def split(self, datetime: str):
         splitted_datetime = datetime.split()
     
-    def check(self, value: int):
-        self.date.check(value, value, value)
-        self.time.check(value, value, value)
+    def commit(self, value: int):
+        self.date.commit(value, value, value)
+        self.time.commit(value, value, value)
     
     def datetime(self):
         datetime = "{0} {1}".format(self.date.date(), self.time.time)
@@ -175,5 +175,5 @@ class DateTime():
 
 if __name__ == "__main__":
     now = DateTime()
-    print(now.check(-10))
+    print(now.commit(-10))
     print(now.now())

@@ -21,8 +21,8 @@
 
 from typing import Protocol
 
-class Checkable(Protocol):
-     def check(self, value: any):
+class DateTimeObject(Protocol):
+     def commit(self, value: any):
         pass
 
 class PublishError(Protocol):
@@ -37,7 +37,7 @@ class PublishDateTimeError():
         except ValueError as e:
             print(e)
 
-class Year(): #Checkable
+class Year(): #DateTimeObject
     year: int
     publish_yearerror: PublishError
 
@@ -47,7 +47,7 @@ class Year(): #Checkable
     def __exception(self, value: int):
         self.publish_yearerror.exception(value)
 
-    def check(self, value: int):
+    def commit(self, value: int):
         if(value <= 0):
             self.__exception(value)
         else:
@@ -55,9 +55,9 @@ class Year(): #Checkable
 
     def __init__(self, year: int):
         self.__setexception(PublishDateTimeError())
-        self.check(year)
+        self.commit(year)
 
-class Month(): #Checkable
+class Month(): #DateTimeObject
     month: int
     publish_montherror: PublishError
 
@@ -67,7 +67,7 @@ class Month(): #Checkable
     def __exception(self, value: int):
         self.publish_montherror.exception(value)
 
-    def check(self, value: int):
+    def commit(self, value: int):
         if(value <= 0 or 12 < value):
             self.__exception
         else:
@@ -75,9 +75,9 @@ class Month(): #Checkable
 
     def __init__(self, month: int):
         self.__setexception(PublishDateTimeError())
-        self.check(month)
+        self.commit(month)
 
-class Day(): #Checkable
+class Day(): #DateTimeObject
     day: int
     publish_dayerror: PublishError
 
@@ -87,7 +87,7 @@ class Day(): #Checkable
     def __exception(self, value: int):
         self.publish_dayerror.exception(value)
 
-    def check(self, value: int):
+    def commit(self, value: int):
         if(value < 0 or 31 < value):
             self.__exception
         else:
@@ -95,9 +95,9 @@ class Day(): #Checkable
 
     def __init__(self, day: int):
         self.__setexception(PublishDateTimeError())
-        self.check(day)
+        self.commit(day)
 
-class Hour(): #Checkable
+class Hour(): #DateTimeObject
     hour: int
     publish_hourerror: PublishError
 
@@ -107,7 +107,7 @@ class Hour(): #Checkable
     def __exception(self, value: int):
         self.publish_hourerror.exception(value)
 
-    def check(self, value: int):
+    def commit(self, value: int):
         if(value < 0 or 24 < value):
             self.__exception
         else:
@@ -115,9 +115,9 @@ class Hour(): #Checkable
 
     def __init__(self, hour: int):
         self.__setexception(PublishDateTimeError())
-        self.check(hour)
+        self.commit(hour)
 
-class Minute(): #Checkable
+class Minute(): #DateTimeObject
     minute: int
     publish_minuteerror: PublishError
 
@@ -127,7 +127,7 @@ class Minute(): #Checkable
     def __exception(self, value: int):
         self.publish_minuteerror.exception(value)
 
-    def check(self, value: int):
+    def commit(self, value: int):
         if(value < 0 or 60 < value):
             self.__exception
         else:
@@ -135,9 +135,9 @@ class Minute(): #Checkable
 
     def __init__(self, minute: int):
         self.__setexception(PublishDateTimeError())
-        self.check(minute)
+        self.commit(minute)
 
-class Second(): #Checkable
+class Second(): #DateTimeObject
     second: any
     publish_seconderror: PublishError
 
@@ -147,7 +147,7 @@ class Second(): #Checkable
     def __exception(self, value: float):
         self.publish_seconderror.exception(value)
 
-    def check(self, value: float):
+    def commit(self, value: float):
         if(value < 0 or 60 < value):
             self.__exception
         else:
@@ -155,5 +155,5 @@ class Second(): #Checkable
 
     def __init__(self, second: float):
         self.__setexception(PublishDateTimeError())
-        self.check(second)
+        self.commit(second)
 
