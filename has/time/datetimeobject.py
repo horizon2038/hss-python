@@ -22,9 +22,12 @@
 from typing import Protocol
 
 class DateTimeObject(Protocol):
-     def commit(self, value: any):
+    def commit(self, value: any):
         pass
-
+    
+    def get(self):
+        pass
+    
 class PublishError(Protocol):
     def exception(self, value: any):
         pass
@@ -52,6 +55,9 @@ class Year(): #DateTimeObject
             self.__exception(value)
         else:
             self.year = value
+    
+    def get(self):
+        return self.year
 
     def __init__(self, year: int):
         self.__setexception(PublishDateTimeError())
@@ -73,6 +79,9 @@ class Month(): #DateTimeObject
         else:
             self.month = value
 
+    def get(self):
+        return self.month
+
     def __init__(self, month: int):
         self.__setexception(PublishDateTimeError())
         self.commit(month)
@@ -92,6 +101,9 @@ class Day(): #DateTimeObject
             self.__exception
         else:
             self.day = value
+
+    def get(self):
+        return self.day
 
     def __init__(self, day: int):
         self.__setexception(PublishDateTimeError())
@@ -113,6 +125,9 @@ class Hour(): #DateTimeObject
         else:
             self.hour = value
 
+    def get(self):
+        return self.hour
+
     def __init__(self, hour: int):
         self.__setexception(PublishDateTimeError())
         self.commit(hour)
@@ -133,6 +148,9 @@ class Minute(): #DateTimeObject
         else:
             self.minute = value
 
+    def get(self):
+        return self.minute
+
     def __init__(self, minute: int):
         self.__setexception(PublishDateTimeError())
         self.commit(minute)
@@ -152,6 +170,9 @@ class Second(): #DateTimeObject
             self.__exception
         else:
             self.second = value
+
+    def get(self):
+        return self.second
 
     def __init__(self, second: float):
         self.__setexception(PublishDateTimeError())

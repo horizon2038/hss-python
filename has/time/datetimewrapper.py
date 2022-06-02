@@ -82,7 +82,7 @@ class Date():
         self.day.commit(day)
 
     def date(self):
-        date: str = "{0} {1} {2}".format(self.year.year, self.month.month, self.day.day)
+        date: str = "{0} {1} {2}".format(self.year.get(), self.month.get(), self.day.get())
         return date
 
     def __loadnowdate(self):
@@ -133,7 +133,7 @@ class Time():
         self.second.commit(second)
 
     def time(self):
-        time: str = "{0} {1} {2}".format(self.hour.hour, self.minute.minute, self.second.second)
+        time: str = "{0} {1} {2}".format(self.hour.get(), self.minute.get(), self.second.get())
         return time
 
     def __loadnowtime(self):
