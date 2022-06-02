@@ -18,72 +18,83 @@
  IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  """
+from abstractdatetime import DateTime
 import datetime
-from .datetimeobject import DateTimeObject
-from .datetimeobjects import DateTimeObjects
-from .datetimefactory import DateTimeObjectFactory, DateTimeObjectsFactory
+from datetimeobject import DateTimeObject
+from datetimeobjects import DateTimeObjects
+from datetimefactory import DateTimeObjectFactory, DateTimeObjectsFactory
 
 class DateTimeImpl():
     date: DateTimeObjects
     time: DateTimeObjects
 
-    year: DateTimeObject
-    month: DateTimeObject
-    day: DateTimeObject
-    hour: DateTimeObject
-    minute: DateTimeObject
-    second: DateTimeObject
     __nowdate: any
 
-    def __injectdatetimeobjectfactory(self, datetimeobjectfactory: DateTimeObjectFactory):
-        self.year = datetimeobjectfactory.make("year")
-        self.month = datetimeobjectfactory.make("month")
-        self.day = datetimeobjectfactory.make("day")
+    def __injectdatetimeobjectfactory(self, datetimeobjectfactory: DateTimeObjectFactory, datetimeobjectsfactory: DateTimeObjectFactory):
+        year: DateTimeObject = datetimeobjectfactory.make("year")
+        month: DateTimeObject = datetimeobjectfactory.make("month")
+        day: DateTimeObject = datetimeobjectfactory.make("day")
+        self.date = datetimeobjectsfactory.make("date", [year, month, day])
 
-        self.hour = datetimeobjectfactory.make("hour")
-        self.minute = datetimeobjectfactory.make("minute")
-        self.second = datetimeobjectfactory.make("second")
+        hour: DateTimeObject = datetimeobjectfactory.make("hour")
+        minute: DateTimeObject = datetimeobjectfactory.make("minute")
+        second: DateTimeObject = datetimeobjectfactory.make("second")
+        self.time = datetimeobjectsfactory.make("time", [hour, minute, second])
 
-    def current(self):
-        date: str = "{0} {1} {2}".format(self.year.current(), self.month.current(), self.day.current(), self.hour.current(), self.minute.current(), self.second.current())
+    def currentdate(self):
+        date: list[int] = [self.year.current(), self.month.current(), self.day.current()]
         return date
 
-    def commit(self, year: int, month: int, day: int):
-        self.year.commit(year)
-        self.month.commit(month)
-        self.day.commit(day)
+    def currenttime(self):
+        time: list[int] = [self.hour.current(), self.minute.current(), self.second.current()]
+        return time
+
+    def current(self):
+        date: list[int] = self.currentdate()
+        time: list[int] = self.currenttime()
+        return date + time
+
+    def commitdate(self, year: int, month: int, day: int):
+        self.date.commit([year, month, day])
+
+    def committime(self, hour: int, minute: int, second: int):
+        self.date.commit([hour, minute, second])
+
+    def commit(self, year: int, month: int, day: int, hour: int, minute: int, second: int):
+        self.commitdate([year, month, day])
+        self.committime([hour, minute, second])
 
     def __fetchnowdatetime(self):
         self.__nowdate = datetime.datetime.now()
 
-    def __getnowyear(self):
+    def __getnowdate(self):
         year = int(self.__nowdate.strftime("%Y"))
         self.year.commit(year)
-
-    def __getnowmonth(self):
         month = int(self.__nowdate.strftime("%m"))
         self.month.commit(month)
-
-    def __getnowday(self):
         day = int(self.__nowdate.strftime("%d"))
         self.day.commit(day)
 
-    def __loadnowdate(self):
-        self.__fetchnowdatetime()
-        self.__getnowyear()
-        self.__getnowmonth()
-        self.__getnowday()
+    def __getnowtime(self):
+        hour = int(self.__nowdate.strftime("%H"))
+        self.year.commit(hour)
+        minute = int(self.__nowdate.strftime("%M"))
+        self.month.commit(minute)
+        second = int(self.__nowdate.strftime("%S"))
+        self.day.commit(second)
 
     def now(self):
         self.__loadnowdate()
-        date: str = self.current()
-        return date
+        date: list[int] = self.__getnowdate()
+        time: list[int] = self.__getnowtime()
+        datetime: list[int] = date + time
+        return datetime
 
-    def __init__(self,datetimeobjectfactory: DateTimeObjectFactory):
-        self.__injectdatetimeobjectfactory(datetimeobjectfactory)
+    def __init__(self,datetimeobjectfactory: DateTimeObjectFactory, datetimeobjectsfactory: DateTimeObjectsFactory):
+        self.__injectdatetimeobjectfactory(datetimeobjectfactory, datetimeobjectsfactory)
         self.now() 
 
 if __name__ == "__main__":
-    now: DateTime = DateTimeImpl(DateTimeObjectFactoryImpl())
+    now: DateTime = DateTimeImpl();
     print(now.commit(2005, 7, 28))
     print(now.current())
