@@ -21,9 +21,9 @@
 
 from typing import Protocol
 
-class DateTimeObject(Protocol):
+class DateTimeObjects(Protocol):
     def current(self):
         pass
-
-    def commit(self, value: int):
+    
+    def commit(self, date: list[int]):
         pass
