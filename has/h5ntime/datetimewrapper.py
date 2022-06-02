@@ -18,7 +18,6 @@
  IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  """
-from abstractdatetime import DateTime
 import datetime
 from datetimeobject import DateTimeObject
 from datetimeobjects import DateTimeObjects
@@ -93,8 +92,3 @@ class DateTimeImpl():
     def __init__(self,datetimeobjectfactory: DateTimeObjectFactory, datetimeobjectsfactory: DateTimeObjectsFactory):
         self.__injectdatetimeobjectfactory(datetimeobjectfactory, datetimeobjectsfactory)
         self.now() 
-
-if __name__ == "__main__":
-    now: DateTime = DateTimeImpl();
-    print(now.commit(2005, 7, 28))
-    print(now.current())
