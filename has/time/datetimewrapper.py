@@ -49,25 +49,38 @@ class DateTimeFactoryImpl():  #Multiple conditional branches are only used for F
         elif (type == "second"):
             return datetimeobject.Second(0.00)
 
-class Date():
+class DateTime():
+    def current(self):
+        pass
+
+    def commit(self):
+        pass
+
+    def now(self):
+        pass
+
+class DateTimeImpl():
 
     year: DateTimeObject
     month: DateTimeObject
     day: DateTimeObject
     __nowdate: any
 
-    def __injectdate(self, datetimefactory: DateTimeFactory):
+    def __injectdatetime(self, datetimefactory: DateTimeFactory):
         self.year = datetimefactory.makedatetime("year")
         self.month = datetimefactory.makedatetime("month")
         self.day = datetimefactory.makedatetime("day")
-
-    def __getnowdate(self):
-        self.__nowdate = datetime.datetime.now()
+        self.hour = datetimefactory.makedatetime("hour")
+        self.minute = datetimefactory.makedatetime("minute")
+        self.second = datetimefactory.makedatetime("second")
 
     def commit(self, year: int, month: int, day: int):
         self.year.commit(year)
         self.month.commit(month)
         self.day.commit(day)
+
+    def __getnowdate(self):
+        self.__nowdate = datetime.datetime.now()
 
     def __getnowyear(self):
         year = int(self.__nowdate.strftime("%Y"))
@@ -81,8 +94,8 @@ class Date():
         day = int(self.__nowdate.strftime("%d"))
         self.day.commit(day)
 
-    def date(self):
-        date: str = "{0} {1} {2}".format(self.year.get(), self.month.get(), self.day.get())
+    def current(self):
+        date: str = "{0} {1} {2}".format(self.year.current(), self.month.current(), self.day.current())
         return date
 
     def __loadnowdate(self):
@@ -97,81 +110,8 @@ class Date():
         return date
 
     def __init__(self,datetimefactory: DateTimeFactory):
-        self.__injectdate(datetimefactory)
+        self.__injectdatetime(datetimefactory)
         self.now() 
-
-class Time():
-
-    hour: DateTimeObject
-    minute: DateTimeObject
-    second: DateTimeObject
-    __nowtime: any
-
-    def __injecttime(self, datetimefactory: DateTimeFactory):
-        self.hour = datetimefactory.makedatetime("hour")
-        self.minute = datetimefactory.makedatetime("minute")
-        self.second = datetimefactory.makedatetime("second")
-
-    def __getnowtime(self):
-        self.__nowtime = datetime.datetime.now()
-
-    def commit(self, hour: int, minute: int, second: float):
-        self.hour.commit(hour)
-        self.minute.commit(minute)
-        self.second.commit(second)
-
-    def __getnowhour(self):
-        hour = int(self.__nowtime.strftime("%H"))
-        self.hour.commit(hour)
-
-    def __getnowminute(self):
-        minute = int(self.__nowtime.strftime("%M"))
-        self.minute.commit(minute)
-
-    def __getnowsecond(self):
-        second = float(self.__nowtime.strftime("%S.%f"))
-        self.second.commit(second)
-
-    def time(self):
-        time: str = "{0} {1} {2}".format(self.hour.get(), self.minute.get(), self.second.get())
-        return time
-
-    def __loadnowtime(self):
-        self.__getnowtime()
-        self.__getnowhour()
-        self.__getnowminute()
-        self.__getnowsecond()
-
-    def now(self):
-        self.__loadnowtime()
-        time: str = self.time()
-        return time
-
-    def __init__(self,datetimefactory: DateTimeFactory):
-        self.__injecttime(datetimefactory)
-        self.now() 
-
-class DateTime():
-    date: Date
-    time: Time
-
-    def __init__(self):
-        self.date = Date(DateTimeFactoryImpl())
-        self.time = Time(DateTimeFactoryImpl())
-
-    def split(self, datetime: str):
-        splitted_datetime = datetime.split()
-    
-    def commit(self, value: int):
-        self.date.commit(value, value, value)
-        self.time.commit(value, value, value)
-    
-    def datetime(self):
-        datetime = "{0} {1}".format(self.date.date(), self.time.time)
-
-    def now(self):
-        datetime: str = "{0} {1}".format(self.date.now(), self.time.now())
-        return datetime
 
 if __name__ == "__main__":
     now = DateTime()
