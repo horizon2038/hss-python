@@ -26,16 +26,16 @@ class DateImpl():
     month: DateTimeObject
     day: DateTimeObject
 
-    def __injectdatetime(self, date: list[DateTimeObject]):
+    def __injectdate(self, date: list[DateTimeObject]):
         self.year = date[0]
         self.month = date[1]
         self.day = date[2]
 
     def current(self):
-        date: list[int]
-        date[0] = self.year
-        date[1] = self.month
-        date[2] = self.day
+        date: list[int] = []
+        date.append(self.year.current())
+        date.append(self.month.current())
+        date.append(self.day.current())
         return date
 
     def commit(self, date: list[int]):
@@ -51,16 +51,16 @@ class TimeImpl():
     minute: DateTimeObject
     second: DateTimeObject
 
-    def __injectdatetimeobjectfactory(self, time: list[DateTimeObject]):
+    def __injecttime(self, time: list[DateTimeObject]):
         self.hour = time[0]
         self.minute = time[1]
         self.second = time[2]
 
     def current(self):
-        time: list[int]
-        time[0] = self.hour
-        time[1] = self.minute
-        time[2] = self.second
+        time: list[int] = []
+        time.append(self.hour.current())
+        time.append(self.minute.current())
+        time.append(self.second.current())
         return time
 
     def commit(self, time: list[int]):

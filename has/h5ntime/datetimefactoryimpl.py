@@ -19,10 +19,10 @@
  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  """
 
-from .datetimeobject import DateTimeObject
-from .datetimeobjects import DateTimeObjects
-from . import datetimeobjectimpl
-from . import datetimeobjectsimpl
+from datetimeobject import DateTimeObject
+from datetimeobjects import DateTimeObjects
+import datetimeobjectimpl
+import datetimeobjectsimpl
 
 class DateTimeObjectFactoryImpl():  #Multiple conditional branches are only used for Factory
     def make(self, type: str) -> DateTimeObject:

@@ -41,11 +41,11 @@ class DateTimeImpl():
         self.time = datetimeobjectsfactory.make("time", [hour, minute, second])
 
     def currentdate(self):
-        date: list[int] = [self.year.current(), self.month.current(), self.day.current()]
+        date: list[int] = self.date.current()
         return date
 
     def currenttime(self):
-        time: list[int] = [self.hour.current(), self.minute.current(), self.second.current()]
+        time: list[int] = self.time.current()
         return time
 
     def current(self):
@@ -68,27 +68,21 @@ class DateTimeImpl():
 
     def __getnowdate(self):
         year = int(self.__nowdate.strftime("%Y"))
-        self.year.commit(year)
         month = int(self.__nowdate.strftime("%m"))
-        self.month.commit(month)
         day = int(self.__nowdate.strftime("%d"))
-        self.day.commit(day)
+        self.date.commit([year, month, day])
 
     def __getnowtime(self):
         hour = int(self.__nowdate.strftime("%H"))
-        self.year.commit(hour)
         minute = int(self.__nowdate.strftime("%M"))
-        self.month.commit(minute)
         second = int(self.__nowdate.strftime("%S"))
-        self.day.commit(second)
+        self.time.commit([hour, minute, second])
 
     def now(self):
-        self.__loadnowdate()
+        self.__fetchnowdatetime()
         date: list[int] = self.__getnowdate()
         time: list[int] = self.__getnowtime()
-        datetime: list[int] = date + time
-        return datetime
+        return date
 
     def __init__(self,datetimeobjectfactory: DateTimeObjectFactory, datetimeobjectsfactory: DateTimeObjectsFactory):
         self.__injectdatetimeobjectfactory(datetimeobjectfactory, datetimeobjectsfactory)
-        self.now() 
