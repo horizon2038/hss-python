@@ -27,11 +27,8 @@ class PublishError(Protocol):
 
 class PublishDateTimeError():
     def exception(self, value: any):
-        try:
-            raise ValueError("ERROR: invalid DateTime '{0}'".format(value))
-
-        except ValueError as e:
-            print(e)
+        print("ERROR: invalid DateTime '{0}'".format(value))
+        raise ValueError()
 
 class Year(): #DateTimeObject
     year: int
@@ -68,7 +65,7 @@ class Month(): #DateTimeObject
 
     def commit(self, value: int):
         if(value <= 0 or 12 < value):
-            self.__exception
+            self.__exception(value)
         else:
             self.month = value
 
@@ -91,7 +88,7 @@ class Day(): #DateTimeObject
 
     def commit(self, value: int):
         if(value < 0 or 31 < value):
-            self.__exception
+            self.__exception(value)
         else:
             self.day = value
 
@@ -114,7 +111,7 @@ class Hour(): #DateTimeObject
 
     def commit(self, value: int):
         if(value < 0 or 24 < value):
-            self.__exception
+            self.__exception(value)
         else:
             self.hour = value
 
@@ -137,7 +134,7 @@ class Minute(): #DateTimeObject
 
     def commit(self, value: int):
         if(value < 0 or 60 < value):
-            self.__exception
+            self.__exception(value)
         else:
             self.minute = value
 
@@ -160,7 +157,7 @@ class Second(): #DateTimeObject
 
     def commit(self, value: int):
         if(value < 0 or 60 < value):
-            self.__exception
+            self.__exception(value)
         else:
             self.second = value
 
