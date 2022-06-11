@@ -87,7 +87,7 @@ class Day(): #DateTimeObject
         self.publish_dayerror.exception(value)
 
     def commit(self, value: int):
-        if(value < 0 or 31 < value):
+        if(value <= 0 or 31 < value):
             self.__exception(value)
         else:
             self.day = value
@@ -133,7 +133,7 @@ class Minute(): #DateTimeObject
         self.publish_minuteerror.exception(value)
 
     def commit(self, value: int):
-        if(value < 0 or 60 < value):
+        if(value < 0 or 60 <= value):
             self.__exception(value)
         else:
             self.minute = value
