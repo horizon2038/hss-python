@@ -9,6 +9,6 @@ class UserCreate(Protocol):
     def handleuserdata(userdata: UserData):
         pass
 
-class UserAuthentication(Protocol):
+class UserAuthenticate(Protocol):
     def handleuserdata(userdata: UserData):
         pass
