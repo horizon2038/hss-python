@@ -23,21 +23,57 @@ import hashlib
 
 class Id():
     def __init__(self, id: str):
-        self.value: str = id
+        self.__value: str = self.__checkid(id)
+
+    def __checkid(self, id: str):
+        if id is None:
+            raise Exception
+        elif len(id) <= 3:
+            raise Exception
+        else:
+            return id
+
+    def getid(self):
+        return self.__value
+
+    def equals(self, targetid: 'Id'):
+        if self.__value == targetid.__value:
+            return True
+        else:
+            return False
 
 class Password():
     def __init__(self, password: str):
-        self.value: str = password
+        self.__value: str = self.__checkpassword(password)
+
+    def __checkpassword(self, password: str):
+        if password is None:
+            raise Exception
+        elif len(id) <= 3:
+            raise Exception
+        else:
+            return password
+
+    def setid(self):
+        return self.__value
+
+    def equals(self, targetpassword: 'Password'):
+        if self.__value == targetpassword.__value:
+            return True
+        else:
+            return False
 
 class User(Protocol):
-    def __init__(self, id: str, hashed_password: int):
+    def __init__(self, id: Id, password: Password):
         pass
 
 class UserImpl():
+    id: Id
+    password: Password
     
-    def __init__(self, id: str, hashed_password: int):
+    def __init__(self, id: Id, password: Password):
         self.id = id
-        self.hashed_password = hashed_password
+        self.password = password
 
 if __name__ == "__main__":
     password: str = "1145141919810"
