@@ -12,9 +12,3 @@ class TokenGeneratorImpl():
 
     def generatetoken(self):
         return secrets.token_hex()
-
-if __name__ == "__main__":
-    TGI = TokenGeneratorImpl()
-    typetest = TGI.generatetoken()
-    print(typetest)
-

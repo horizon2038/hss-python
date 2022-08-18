@@ -71,7 +71,7 @@ class UserImpl():
     id: Id
     password: Password
 
-    def __init__(self, id: Id, password: Password):
+    def __init__(self, id: Id, password: Password): #Assertions are already made in the value object
         self.id = id
         self.password = password
 
