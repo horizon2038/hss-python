@@ -49,12 +49,12 @@ class Password():
     def __checkpassword(self, password: str):
         if password is None:
             raise Exception
-        elif len(id) <= 3:
+        elif len(password) <= 3:
             raise Exception
         else:
             return password
 
-    def setid(self):
+    def getpassword(self):
         return self.__value
 
     def equals(self, targetpassword: 'Password'):
@@ -70,14 +70,22 @@ class User(Protocol):
 class UserImpl():
     id: Id
     password: Password
-    
+
     def __init__(self, id: Id, password: Password):
         self.id = id
         self.password = password
 
+    def changepassword(self, newpassword: Password):
+        self.password = newpassword
+
 if __name__ == "__main__":
-    password: str = "1145141919810"
-    hashed_password: any = hashlib.sha256(password.encode()).hexdigest()
-    print(hashed_password)
+    uid = Id("tanaka")
+    hashed_password: any = hashlib.sha256("steinsgate".encode()).hexdigest()
+    upass = Password(hashed_password)
+    user: User = UserImpl(uid, upass)
+    print("{0}: {1}".format(user.id.getid(), user.password.getpassword()))
 
-
+    hashed_password: any = hashlib.sha256("roboticsnotes".encode()).hexdigest()
+    newpass = Password(hashed_password)
+    user.changepassword(newpass)
+    print("{0}: {1}".format(user.id.getid(), user.password.getpassword()))
