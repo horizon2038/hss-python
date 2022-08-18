@@ -1,5 +1,5 @@
 from userrepository import UserRepository
-from userinputport import UserData
+from userdata import UserData
 from passwordhashgenerator import PasswordHashGenerator, PasswordHashGeneratorImpl
 from tokengenerator import TokenGenerator, TokenGeneratorImpl
 
