@@ -3,8 +3,9 @@ from typing import Protocol
 from userdata import UserData
 from user import Id, Password, User, UserImpl
 from userauthentication import UserAuthentication, UserAuthenticationImpl
-from userrepository import UserRepository
-from tokengenerator import TokenGenerator
+from application.userrepository import UserRepository
+from infrastructure.userrepositoryimpl import UserRepositoryMySQL
+from domain.tokengenerator import TokenGenerator
 
 class AuthenticationFactory():
     def __init__(self):
