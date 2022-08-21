@@ -63,6 +63,10 @@ class Password():
         else:
             return False
 
+class Token():
+    def __init__(self, token: str, expirationdate: int):
+        self.toke
+
 class User(Protocol):
     def __init__(self, id: Id, password: Password):
         pass
