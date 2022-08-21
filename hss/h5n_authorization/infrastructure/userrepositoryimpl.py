@@ -1,8 +1,8 @@
 import hashlib
-from userrepository import UserRepository
+from application.userrepository import UserRepository
 import MySQLdb
 
-class UserRepositoryMySQL():
+class UserRepositoryMySQL(): 
     def __connectDB(self):
         self.connection = MySQLdb.Connect(user='root', passwd='Halcyon441', host='localhost', db='h5nserver')
 
