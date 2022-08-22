@@ -1,8 +1,8 @@
 class Password():
     def __init__(self, password: str):
-        self.__value: str = self.__checkpassword(password)
+        self.__value: str = self.__check_password(password)
 
-    def __checkpassword(self, password: str):
+    def __check_password(self, password: str):
         if password is None:
             raise Exception
         elif len(password) <= 3:
@@ -10,11 +10,11 @@ class Password():
         else:
             return password
 
-    def getpassword(self):
+    def get_password(self):
         return self.__value
 
-    def equals(self, targetpassword: 'Password'):
-        if self.__value == targetpassword.__value:
+    def equals(self, target_password: 'Password'):
+        if self.__value == target_password.__value:
             return True
         else:
             return False

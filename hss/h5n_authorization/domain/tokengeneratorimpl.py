@@ -1,6 +1,7 @@
 import secrets
 
-from domain.tokengenerator import TokenGenerator
+
+from domain.tokengenerator import TokenGenerator #Interface
 
 class TokenGeneratorImpl():
     def __init__(self):

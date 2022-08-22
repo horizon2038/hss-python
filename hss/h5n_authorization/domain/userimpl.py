@@ -1,6 +1,6 @@
 import hashlib
 
-from domain.user import User
+from domain.user import User #Interface
 
 from domain.id import Id
 from domain.password import Password

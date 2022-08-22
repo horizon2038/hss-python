@@ -1,6 +1,8 @@
 import hashlib
 
-from domain.passwordhashgenerator import PasswordHashGenerator
+from domain.passwordhashgenerator import PasswordHashGenerator #Interface
+
+from domain.password import Password
 
 class PasswordHashGeneratorImpl():
     def __init__(self):

@@ -1,8 +1,8 @@
 class Id():
     def __init__(self, id: str):
-        self.__value: str = self.__checkid(id)
+        self.__value: str = self.__check_id(id)
 
-    def __checkid(self, id: str):
+    def __check_id(self, id: str):
         if id is None:
             raise Exception
         elif len(id) <= 3:
@@ -10,11 +10,11 @@ class Id():
         else:
             return id
 
-    def getid(self):
+    def get_id(self):
         return self.__value
 
-    def equals(self, targetid: 'Id'):
-        if self.__value == targetid.__value:
+    def equals(self, target_id: 'Id'):
+        if self.__value == target_id.__value:
             return True
         else:
             return False

@@ -15,10 +15,6 @@ class AuthenticationFactoryImpl():
     def __init__(self):
         pass
 
-    def createuser(userdata: UserData):
-        user: User = UserImpl(userdata.id, userdata.password)
-        return user
-
-    def createauthentication():
+    def createauthentication(self, id: str, password: str):
         userauthentication: UserAuthentication = UserAuthenticationImpl(UserRepository, TokenGenerator)
         return userauthentication

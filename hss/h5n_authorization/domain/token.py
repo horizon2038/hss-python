@@ -1,4 +1,26 @@
 class Token():
-    def __init__(self, token: str, expirationdate: int): #expiration date is Epoch time
-        self.token = token
-        self.expirationdate = expirationdate
+    def __init__(self, token: str, expiration_date: int): #expiration date is Epoch time
+        self.__token = self.__check_token(token)
+        self.__expiration_date = self.__check_expiration_date(expiration_date)
+
+    def get_token(self):
+        return self.__token
+
+    def get_expiration_date(self):
+        return self.__expiration_date
+
+    def __check_token(self, token: str):
+        if token is None:
+            raise Exception
+        elif len(token) <= 3:
+            raise Exception
+        else:
+            return token
+
+    def __check_expiration_date(self, expiration_date: int):
+        if expiration_date is None:
+            raise Exception
+        elif len(expiration_date) <= 3:
+            raise Exception
+        else:
+            return expiration_date
