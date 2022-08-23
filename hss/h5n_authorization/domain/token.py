@@ -20,7 +20,5 @@ class Token():
     def __check_expiration_date(self, expiration_date: int):
         if expiration_date is None:
             raise Exception
-        elif len(expiration_date) <= 3:
-            raise Exception
         else:
             return expiration_date

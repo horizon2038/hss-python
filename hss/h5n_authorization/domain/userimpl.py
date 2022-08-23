@@ -11,9 +11,10 @@ class UserImpl():
     password: Password
     token: Token
 
-    def __init__(self, id: Id, password: Password): #Assertions are already made in the value object
+    def __init__(self, id: Id, password: Password, token: Token): #Assertions are already made in the value object
         self.id = id
         self.password = password
+        self.token = Token
 
     def changepassword(self, newpassword: Password):
         self.password = newpassword

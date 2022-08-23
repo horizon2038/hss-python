@@ -1,5 +1,6 @@
 from typing import Protocol
+from domain.token import Token
 
 class TokenGenerator(Protocol):
-    def generatetoken(self):
+    def generate_token(self) -> Token:
         pass

@@ -1,4 +1,4 @@
-class Password():
+class Password(): #caution:Unhashed
     def __init__(self, password: str):
         self.__value: str = self.__check_password(password)
 

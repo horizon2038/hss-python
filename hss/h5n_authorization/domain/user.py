@@ -25,5 +25,5 @@ from domain.password import Password
 from domain.token import Token
 
 class User(Protocol):
-    def __init__(self, id: Id, password: Password):
+    def __init__(self, id: Id, password: Password, token: Token):
         pass

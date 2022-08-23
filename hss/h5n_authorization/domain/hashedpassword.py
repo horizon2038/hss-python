@@ -18,3 +18,6 @@ class HashedPassword():
             return True
         else:
             return False
+
+if __name__ == "__main__":
+    hashed_password = HashedPassword(None)
