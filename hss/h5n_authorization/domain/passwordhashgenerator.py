@@ -1,6 +1,6 @@
 from typing import Protocol
 
 class PasswordHashGenerator(Protocol):
-    def generatehash(self, password: str):
+    def generate_hash(self, password: str):
         pass
 
