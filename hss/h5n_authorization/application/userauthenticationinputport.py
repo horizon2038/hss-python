@@ -1,6 +1,7 @@
 from typing import Protocol
 from application.userdata import UserData
+from application.tokendata import TokenData
 
-class UserAuthenticateInputport(Protocol):
-    def handle_userdata(userdata: UserData):
+class UserAuthenticationInputport(Protocol):
+    def handle_userdata(userdata: UserData) -> TokenData:
         pass

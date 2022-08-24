@@ -14,7 +14,7 @@ class Id():
         return self.__value
 
     def equals(self, target_id: 'Id'):
-        if self.__value == target_id.__value:
+        if self.get_id() == target_id.get_id():
             return True
         else:
             return False

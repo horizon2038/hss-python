@@ -16,13 +16,13 @@ class UserAuthenticationUsecase():
         self.authenticationfactory: AuthenticationFactory = authenticationfactory
         self.passwordhashgenerator: PasswordHashGenerator = passwordhashgenerator
 
-    def handle_userdata(self, userdata: UserData):
+    def handle_userdata(self, userdata: UserData) -> TokenData:
         userauthentication: UserAuthentication = self.authenticationfactory.create_authentication()
         id: Id = Id(userdata.id)
         password: Password = Password(userdata.password)
-        hashed_password: HashedPassword = PasswordHashGenerator.generate_hash(password)
+        hashed_password: HashedPassword = self.passwordhashgenerator.generate_hash(password)
         user: User = userauthentication.authenticate(id, hashed_password)
         token: Token = user.get_token()
-        tokendata: TokenData = TokenData(token.get_token, token.get_expiration_date)
+        tokendata: TokenData = TokenData(token.get_token(), token.get_expiration_date())
         return tokendata
 

@@ -1,5 +1,3 @@
-import hashlib
-
 from domain.user import User #Interface
 
 from domain.id import Id
@@ -14,7 +12,7 @@ class UserImpl():
     def __init__(self, id: Id, hashed_password: HashedPassword, token: Token): #Assertions are already made in the value object
         self.id = id
         self.hashed_password = hashed_password
-        self.token = Token
+        self.token = token
 
     def get_id(self) -> Id:
         return self.id

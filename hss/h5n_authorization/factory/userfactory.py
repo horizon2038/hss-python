@@ -7,5 +7,5 @@ class UserFactory:
     def __init__(self):
         pass
 
-    def createuser(id: Id, hashed_password: HashedPassword, token: Token) -> User:
+    def createuser(self, id: Id, hashed_password: HashedPassword, token: Token) -> User:
         pass

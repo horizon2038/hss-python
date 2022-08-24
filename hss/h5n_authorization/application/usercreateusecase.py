@@ -1,7 +1,9 @@
 from userrepository import UserRepository
 from userdata import UserData
-from domain.passwordhashgenerator import PasswordHashGenerator, PasswordHashGeneratorImpl
-from domain.tokengenerator import TokenGenerator, TokenGeneratorImpl
+from domain.id import Id
+from domain.password import Password
+from domain.hashedpassword import HashedPassword
+from domain_services.passwordhashgenerator import PasswordHashGenerator
 
 from infrastructure.userrepositoryimpl import UserRepositoryMySQL
     
@@ -11,5 +13,6 @@ class UserCleateImpl():
         self.passwordhashgenerator: PasswordHashGenerator = passwordhashgenerator
 
     def handle_userdata(self, userdata: UserData):
-        hashed_password: str = self.passwordhashgenerator.generatehash(userdata.password)
+        password: Password = Password(userdata.password)
+        hashed_password: HashedPassword = self.passwordhashgenerator.generate_hash(password)
         self.userrepository.adduser(userdata.id, hashed_password)

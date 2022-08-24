@@ -14,10 +14,7 @@ class HashedPassword():
         return self.__value
 
     def equals(self, target_password: 'HashedPassword'):
-        if self.__value == target_password.__value:
+        if self.get_password() == target_password.get_password():
             return True
         else:
             return False
-
-if __name__ == "__main__":
-    hashed_password = HashedPassword(None)

@@ -33,3 +33,9 @@ class PasswordHashGeneratorImpl():
         salt_added_password = password.get_password() + salt
         hashed_password: str = self.__generate_sha256(salt_added_password)
         return HashedPassword(hashed_password)
+
+if __name__ == "__main__":
+    phg = PasswordHashGeneratorImpl()
+    password: Password = Password("Halcyon441")
+    hashed_password: HashedPassword = phg.generate_hash(password)
+    print(hashed_password.get_password())

@@ -18,14 +18,15 @@
  IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  """
-from typing import Protocol
+from typing import Protocol, runtime_checkable
 
 from domain.id import Id
-from domain.password import Password
+from domain.hashedpassword import HashedPassword
 from domain.token import Token
 
+@runtime_checkable
 class User(Protocol):
-    def __init__(self, id: Id, password: Password, token: Token):
+    def __init__(self, id: Id, hashed_password: HashedPassword, token: Token):
         pass
 
     def get_id(self) -> Id:
