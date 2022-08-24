@@ -10,6 +10,6 @@ class UserCleateImpl():
         self.userrepository = userreposiory
         self.passwordhashgenerator: PasswordHashGenerator = passwordhashgenerator
 
-    def handleuserdata(self, userdata: UserData):
+    def handle_userdata(self, userdata: UserData):
         hashed_password: str = self.passwordhashgenerator.generatehash(userdata.password)
         self.userrepository.adduser(userdata.id, hashed_password)
