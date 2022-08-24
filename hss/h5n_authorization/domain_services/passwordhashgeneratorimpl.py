@@ -4,7 +4,7 @@ import hashlib
 from domain.password import Password
 from domain.hashedpassword import HashedPassword
 
-from domain.passwordhashgenerator import PasswordHashGenerator #Interface
+from domain_services.passwordhashgenerator import PasswordHashGenerator #Interface
 
 from domain.password import Password
 
@@ -33,9 +33,3 @@ class PasswordHashGeneratorImpl():
         salt_added_password = password.get_password() + salt
         hashed_password: str = self.__generate_sha256(salt_added_password)
         return HashedPassword(hashed_password)
-
-if __name__ == "__main__":
-    passwordhashgenerator: PasswordHashGenerator = PasswordHashGeneratorImpl()
-    password: Password = Password("testpassword")
-    hashedpassword: HashedPassword = passwordhashgenerator.generate_hash(password)
-    print(hashedpassword.get_password())

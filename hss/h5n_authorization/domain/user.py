@@ -27,3 +27,9 @@ from domain.token import Token
 class User(Protocol):
     def __init__(self, id: Id, password: Password, token: Token):
         pass
+
+    def get_id(self) -> Id:
+        pass
+
+    def get_token(self) -> Token:
+        pass

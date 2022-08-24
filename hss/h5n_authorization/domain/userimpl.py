@@ -3,30 +3,24 @@ import hashlib
 from domain.user import User #Interface
 
 from domain.id import Id
-from domain.password import Password
+from domain.hashedpassword import HashedPassword
 from domain.token import Token
 
 class UserImpl():
     id: Id
-    password: Password
+    hashed_password: HashedPassword
     token: Token
 
-    def __init__(self, id: Id, password: Password, token: Token): #Assertions are already made in the value object
+    def __init__(self, id: Id, hashed_password: HashedPassword, token: Token): #Assertions are already made in the value object
         self.id = id
-        self.password = password
+        self.hashed_password = hashed_password
         self.token = Token
 
-    def changepassword(self, newpassword: Password):
-        self.password = newpassword
+    def get_id(self) -> Id:
+        return self.id
+        
+    def get_token(self) -> Token:
+        return self.token
 
-if __name__ == "__main__":
-    uid = Id("tanaka")
-    hashed_password: any = hashlib.sha256("steinsgate".encode()).hexdigest()
-    upass = Password(hashed_password)
-    user: User = UserImpl(uid, upass)
-    print("{0}: {1}".format(user.id.getid(), user.password.getpassword()))
-
-    hashed_password: any = hashlib.sha256("roboticsnotes".encode()).hexdigest()
-    newpass = Password(hashed_password)
-    user.changepassword(newpass)
-    print("{0}: {1}".format(user.id.getid(), user.password.getpassword()))
+    def changepassword(self, new_hashed_password: HashedPassword):
+        self.password = new_hashed_password
