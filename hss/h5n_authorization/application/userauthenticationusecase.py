@@ -17,14 +17,21 @@ class UserAuthenticationUsecase():
         self.passwordhashgenerator: PasswordHashGenerator = passwordhashgenerator
 
     def handle_userdata(self, userdata: UserData) -> TokenData:
-        userauthentication: UserAuthentication = self.__create_authentication()
-        id: Id = Id(userdata.id)
-        password: Password = Password(userdata.password)
-        hashed_password: HashedPassword = self.passwordhashgenerator.generate_hash(password)
-        user: User = userauthentication.authenticate(id, hashed_password)
-        token: Token = user.get_token()
-        tokendata: TokenData = TokenData(token.get_token(), token.get_expiration_date())
+        self.userauthentication: UserAuthentication = self.authenticationfactory.create_authentication()
+        user: User = self.__create_user(userdata)
+        token: Token = user.get_token() #OK
+        tokendata: TokenData = self.__create_tokendata(token)
         return tokendata
 
-    def __create_authentication(self) -> UserAuthentication:
-        return self.authenticationfactory.create_authentication()
+    def __create_user(self, userdata: UserData) -> User:
+        id: Id = Id(userdata.id)
+        hashed_password: HashedPassword = self.__create_hashed_password(userdata.password)
+        return self.userauthentication.authenticate(id, hashed_password)
+    
+    def __create_hashed_password(self, password: str) -> HashedPassword:
+        password: Password = Password(password)
+        return self.passwordhashgenerator.generate_hash(password)
+
+    def __create_tokendata(self, token: Token) -> TokenData:
+        tokendata: TokenData = TokenData(token.get_token(), token.get_expiration_date())
+        return tokendata
