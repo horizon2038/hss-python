@@ -13,7 +13,7 @@ class UserRepositoryMySQL():
         self.__connectDB()
         self.__createcursor()
 
-    def userexists(self, id: str):
+    def userexists(self, id: str) -> bool:
         query: str = "SELECT EXISTS(SELECT id FROM users WHERE id=%s)"
         self.cursor.execute(query, (id, ))
         res = self.cursor.fetchall()

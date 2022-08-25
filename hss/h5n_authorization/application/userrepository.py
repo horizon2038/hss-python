@@ -1,6 +1,6 @@
 from typing import Protocol
 class UserRepository(Protocol):
-    def userexists(self, id: str):
+    def userexists(self, id: str) -> bool:
         pass
 
     def searchpassword_byuserid(self, id: str) -> str:

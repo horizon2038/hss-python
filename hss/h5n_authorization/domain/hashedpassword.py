@@ -13,8 +13,5 @@ class HashedPassword():
     def get_password(self):
         return self.__value
 
-    def equals(self, target_password: 'HashedPassword'):
-        if self.get_password() == target_password.get_password():
-            return True
-        else:
-            return False
+    def equals(self, target_password: 'HashedPassword') -> bool:
+        return self.get_password() == target_password.get_password()

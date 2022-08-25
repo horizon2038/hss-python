@@ -9,12 +9,25 @@ from factory.userauthenticationinputportfactory import UserAuthenticationInputpo
 from factory.userauthenticationinputportfactoryimpl import UserAuthenticationInputportFactoryImpl
 
 class TestUserAuthenticationUsecase(unittest.TestCase):
-    def test_authentication(self):
-        userauthenticationinputportfactory: UserAuthenticationInputportFactory = UserAuthenticationInputportFactoryImpl()
+    userauthenticationinputportfactory: UserAuthenticationInputportFactory = UserAuthenticationInputportFactoryImpl()
+    userauthenticationusecase: UserAuthenticationInputport = userauthenticationinputportfactory.create_authentication_inputport()
+
+    def test_authentication_success(self):
         userdata: UserData = UserData("horizon", "Halcyon441")
-        userauthenticationusecase: UserAuthenticationInputport = userauthenticationinputportfactory.create_authentication_inputport()
-        token: TokenData = userauthenticationusecase.handle_userdata(userdata)
-        print("token: {} expiration: {}".format(token.token, token.expiration_date))
+        token: TokenData = self.userauthenticationusecase.handle_userdata(userdata)
+        self.assertIsNotNone(token.token)
+        self.assertIsNotNone(token.expiration_date)
+        #print("token: {} expiration: {}".format(token.token, token.expiration_date))
+
+    def test_authentication_invalid_user_id(self):
+        userdata: UserData = UserData("nothorizon", "Halcyon441")
+        with self.assertRaises(Exception):
+            token: TokenData = self.userauthenticationusecase.handle_userdata(userdata)
+
+    def test_authentication_invalid_password(self):
+        userdata: UserData = UserData("horizon", "notHalcyon441")
+        with self.assertRaises(Exception):
+            token: TokenData = self.userauthenticationusecase.handle_userdata(userdata)
 
 if __name__ == "__main__":
     unittest.main()

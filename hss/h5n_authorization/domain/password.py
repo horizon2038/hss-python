@@ -14,7 +14,4 @@ class Password(): #caution:Unhashed
         return self.__value
 
     def equals(self, target_password: 'Password'):
-        if self.get_password() == target_password.get_password():
-            return True
-        else:
-            return False
+        return self.get_password() == target_password.get_password()

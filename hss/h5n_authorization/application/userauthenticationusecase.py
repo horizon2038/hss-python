@@ -17,7 +17,7 @@ class UserAuthenticationUsecase():
         self.passwordhashgenerator: PasswordHashGenerator = passwordhashgenerator
 
     def handle_userdata(self, userdata: UserData) -> TokenData:
-        userauthentication: UserAuthentication = self.authenticationfactory.create_authentication()
+        userauthentication: UserAuthentication = self.__create_authentication()
         id: Id = Id(userdata.id)
         password: Password = Password(userdata.password)
         hashed_password: HashedPassword = self.passwordhashgenerator.generate_hash(password)
@@ -26,3 +26,5 @@ class UserAuthenticationUsecase():
         tokendata: TokenData = TokenData(token.get_token(), token.get_expiration_date())
         return tokendata
 
+    def __create_authentication(self) -> UserAuthentication:
+        return self.authenticationfactory.create_authentication()
