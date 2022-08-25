@@ -16,17 +16,20 @@ class UserAuthenticationImpl():
         self.tokengenerator: TokenGenerator = tokengenerator
 
     def authenticate(self, id: Id, hashed_password: HashedPassword) -> User: #already hashed
-        if (self.userrepository.userexists(id.get_id())):
-            correct_password: HashedPassword = HashedPassword(self.userrepository.searchpassword_byuserid(id.get_id()))
-            if(correct_password.equals(hashed_password)):  
-                token: Token = self.__generatetoken()
-                return self.userfactory.createuser(id, hashed_password, token)
-            else:
-                print("Value not equal")
-                raise Exception
-        else:
+        if not (self.userrepository.userexists(id.get_id())):
             print("This user ID does not exist")
             raise Exception
+
+        correct_password: HashedPassword = HashedPassword(self.userrepository.searchpassword_byuserid(id.get_id()))
+
+        if not (correct_password.equals(hashed_password)):  
+            print("Value not equal")
+            raise Exception
+
+        token: Token = self.__generatetoken()
+        return self.userfactory.createuser(id, hashed_password, token)
+            
+
 
     def __generatetoken(self) -> Token:
         token: Token = self.tokengenerator.generate_token()
