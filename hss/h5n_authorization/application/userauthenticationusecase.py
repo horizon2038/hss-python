@@ -5,9 +5,11 @@ from domain.user import User
 from domain.token import Token
 from domain_services.passwordhashgenerator import PasswordHashGenerator
 from domain_services.userauthentication import UserAuthentication
+from domain_services.authenticationexception import AuthenticationException
 from application.userrepository import UserRepository
 from application.userdata import UserData
 from application.tokendata import TokenData
+from application.applicationexception import ApplicationException
 from factory.authenticationfactory import AuthenticationFactory
 
 class UserAuthenticationUsecase():
@@ -15,13 +17,18 @@ class UserAuthenticationUsecase():
         self.userrepository: UserRepository = userrepository
         self.authenticationfactory: AuthenticationFactory = authenticationfactory
         self.passwordhashgenerator: PasswordHashGenerator = passwordhashgenerator
+        self.userauthentication: UserAuthentication = self.authenticationfactory.create_authentication()
 
     def handle_userdata(self, userdata: UserData) -> TokenData:
-        self.userauthentication: UserAuthentication = self.authenticationfactory.create_authentication()
-        user: User = self.__create_user(userdata)
-        token: Token = user.get_token() #OK
-        tokendata: TokenData = self.__create_tokendata(token)
-        return tokendata
+        try:
+            user: User = self.__create_user(userdata) #TODO: ID, Password, Token Exception -> wrap authentication exception
+            token: Token = user.get_token() #OK
+            tokendata: TokenData = self.__create_tokendata(token)
+            return tokendata
+        except AuthenticationException as e:
+            raise ApplicationException(str(e))
+        finally:
+            pass
 
     def __create_user(self, userdata: UserData) -> User:
         id: Id = Id(userdata.id)

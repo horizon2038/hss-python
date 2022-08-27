@@ -4,9 +4,9 @@ class Id():
 
     def __check_id(self, id: str):
         if id is None:
-            raise Exception
+            raise Exception("Id is none")
         elif len(id) <= 3:
-            raise Exception
+            raise Exception("Id is out of range")
         else:
             return id
 

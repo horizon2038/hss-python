@@ -4,9 +4,9 @@ class Password(): #caution:Unhashed
 
     def __check_password(self, password: str):
         if password is None:
-            raise Exception
+            raise Exception("Password is none")
         elif len(password) <= 3:
-            raise Exception
+            raise Exception("Password is out of range")
         else:
             return password
 

@@ -11,14 +11,14 @@ class Token():
 
     def __check_token(self, token: str):
         if token is None:
-            raise Exception
+            raise Exception("Token is none")
         elif len(token) <= 3:
-            raise Exception
+            raise Exception("Token is out of range")
         else:
             return token
 
     def __check_expiration_date(self, expiration_date: int):
         if expiration_date is None:
-            raise Exception
+            raise Exception("ExpirationDate is none")
         else:
             return expiration_date

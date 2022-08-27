@@ -5,6 +5,7 @@ from domain.hashedpassword import HashedPassword
 from domain.token import Token
 from domain.user import User
 from domain.tokengenerator import TokenGenerator
+from domain_services.authenticationexception import AuthenticationException
 from application.userrepository import UserRepository
 from factory.userfactory import UserFactory
 
@@ -17,21 +18,21 @@ class UserAuthenticationImpl():
 
     def authenticate(self, id: Id, hashed_password: HashedPassword) -> User: #already hashed
         if not (self.__check_user_data(id, hashed_password)):
-            print ("failed authenticate")
-            raise Exception
+            print ("Authentication Failed")
+            raise AuthenticationException("Authentication Failed")
 
         return self.__create_user(id, hashed_password)
 
     def __check_user_data(self, id: Id, hashed_password: HashedPassword) -> bool:
         if not (self.userrepository.userexists(id.get_id())):
-            print("This user ID does not exist")
-            raise Exception
+            print("Invalid Id")
+            return False
 
         correct_password: HashedPassword = self.__generate_correct_password(id)
 
         if not (correct_password.equals(hashed_password)):
-            print("Value not equal")
-            raise Exception
+            print("Incorrect Password")
+            return False
 
         return True
 

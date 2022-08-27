@@ -4,9 +4,9 @@ class HashedPassword():
 
     def __check_password(self, hashed_password: str):
         if hashed_password is None:
-            raise Exception
+            raise Exception("HashedPassword is none")
         elif len(hashed_password) <= 3:
-            raise Exception
+            raise Exception("HashedPassword is out of range")
         else:
             return hashed_password
 
