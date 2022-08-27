@@ -39,10 +39,3 @@ class UserRepositoryMySQL():
         query: str = "DELETE FROM users WHERE id=%s"
         self.cursor.execute(query, (id, ))
         self.connection.commit()
-
-if __name__ == "__main__":
-    URM = UserRepositoryMySQL()
-    #URM.adduser("horizon", "9bf5f4b10ef0cc102522899494d338682ab2084ca60e39930d4c55959b8c89bd") #"Halcyon441" -> SHA256 hashed"
-    print(URM.userexists("horizon"))
-    URM.changeuserpassword("horizon", "7285f4b10ef0cc102522899494d338682ab2084ca60e39930d4c55959b8c89bd")
-    print(URM.searchpassword_byuserid("horizon"))
