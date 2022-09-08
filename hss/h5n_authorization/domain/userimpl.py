@@ -16,9 +16,12 @@ class UserImpl():
 
     def get_id(self) -> Id:
         return self.id
+    
+    def get_password(self) -> HashedPassword:
+        return self.hashed_password
         
     def get_token(self) -> Token:
         return self.token
 
-    def changepassword(self, new_hashed_password: HashedPassword):
-        self.password = new_hashed_password
+    def change_password(self, new_hashed_password: HashedPassword):
+        self.hashed_password = new_hashed_password

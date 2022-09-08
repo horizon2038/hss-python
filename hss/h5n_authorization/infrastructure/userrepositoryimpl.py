@@ -1,6 +1,11 @@
 import hashlib
-from application.userrepository import UserRepository
 import MySQLdb
+
+from application.userrepository import UserRepository
+from domain.id import Id
+from domain.hashedpassword import HashedPassword
+from domain.token import Token
+from domain.user import User
 
 class UserRepositoryMySQL(): 
     def __connectDB(self):
@@ -13,29 +18,45 @@ class UserRepositoryMySQL():
         self.__connectDB()
         self.__createcursor()
 
-    def userexists(self, id: str) -> bool:
+    def exists(self, id: Id) -> bool:
         query: str = "SELECT EXISTS(SELECT id FROM users WHERE id=%s)"
-        self.cursor.execute(query, (id, ))
+        self.cursor.execute(query, (id.get_id(), ))
         res = self.cursor.fetchall()
         return res[0][0]
 
-    def searchpassword_byuserid(self, id: str) -> str:
-        query: str = "SELECT id, password FROM users WHERE id=%s"
-        self.cursor.execute(query, (id, ))
+    def find_password(self, id: Id) -> HashedPassword:
+        query: str = "SELECT password FROM users WHERE id=%s"
+        self.cursor.execute(query, (id.get_id(), ))
         res = self.cursor.fetchall()
         return res[0][1]
 
-    def changeuserpassword(self, id: str, password: str):
-        query: str = "UPDATE users SET password=%s WHERE id=%s"
-        self.cursor.execute(query, (password, id))
+    def find_token(self, id: Id) -> Token:
+        query: str = "SELECT token, expiration_date FROM users WHERE id=%s"
+        self.cursor.execute(query, (id.get_id(), ))
+        res = self.cursor.fetchall()
+        __token: str = res[0][0]
+        __expiration_date: int = res[0][1]
+        return Token(__token, __expiration_date)
+
+    def add(self, user: User):
+        query: str = "INSERT INTO users (id, password, token, expiration_date) VALUES (%s, %s, %s, %s)"
+        __id: str = user.get_id()
+        __hashed_password: str = user.get_password()
+        __token: str = user.get_token().get_token()
+        __expiration_date: int = user.get_token().get_expiration_date()
+        self.cursor.execute(query, (__id, __hashed_password, __token, __expiration_date))
         self.connection.commit()
 
-    def adduser(self, id: str, hashed_password: str):
-        query: str = "INSERT INTO users (id, password, hash) VALUES (%s, %s, null)"
-        self.cursor.execute(query, (id, hashed_password))
+    def store(self, user: User):
+        query: str = "UPDATE users SET password=%s, token=%s, expiration_date=%s WHERE id=%s"
+        __id: str = user.get_id()
+        __hashed_password: str = user.get_password()
+        __token: str = user.get_token().get_token()
+        __expiration_date: int = user.get_token().get_expiration_date()
+        self.cursor.execute(query, (__hashed_password, __token, __expiration_date, __id))
         self.connection.commit()
 
-    def deleteuser(self, id: str):
+    def delete(self, id: str):
         query: str = "DELETE FROM users WHERE id=%s"
         self.cursor.execute(query, (id, ))
         self.connection.commit()

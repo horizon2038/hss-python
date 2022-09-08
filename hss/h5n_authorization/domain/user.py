@@ -32,5 +32,8 @@ class User(Protocol):
     def get_id(self) -> Id:
         pass
 
+    def get_password(self) -> HashedPassword:
+        pass
+
     def get_token(self) -> Token:
         pass

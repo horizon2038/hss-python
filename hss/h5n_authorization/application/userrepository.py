@@ -1,21 +1,26 @@
 from typing import Protocol
+
+from domain.id import Id
+from domain.hashedpassword import HashedPassword
+from domain.token import Token
+from domain.user import User
+
 class UserRepository(Protocol):
-    def userexists(self, id: str) -> bool:
+    def exists(self, id: Id) -> bool:
         pass
 
-    def searchpassword_byuserid(self, id: str) -> str:
+    def find_password(self, id: Id) -> HashedPassword:
         pass
 
-    def changeuserpassword(self, id: str, password: str):
+    def find_token(self, id: Id) -> Token:
         pass
 
-    def adduser(self, id: str, password: str):
+    def add(self, user: User): #Create New User
         pass
 
-    def changeuserpassword(self, id: str, password: str):
+    def store(self, user: User): #Updates can only be made from the aggregate.
         pass
 
-    def deleteuser(self, id: str):
+    def delete(self, id: Id):
         pass
-    
 
