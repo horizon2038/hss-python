@@ -3,5 +3,5 @@ from application.userdata import UserData
 from application.tokendata import TokenData
 
 class UserAuthenticationInputport(Protocol):
-    def handle_userdata(userdata: UserData) -> TokenData:
+    def authenticate(userdata: UserData) -> TokenData:
         pass

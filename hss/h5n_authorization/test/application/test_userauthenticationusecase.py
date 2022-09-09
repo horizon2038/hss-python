@@ -15,7 +15,7 @@ class TestUserAuthenticationUsecase(unittest.TestCase):
     def test_authentication_success(self):
         print("\033[05;44m" + "test_authentication_success" + "\033[0m")
         userdata: UserData = UserData("horizon", "Halcyon441")
-        token: TokenData = self.userauthenticationusecase.handle_userdata(userdata)
+        token: TokenData = self.userauthenticationusecase.authenticate(userdata)
         print("token: {} expiration_date: {}".format(token.token, token.expiration_date))
         self.assertIsNotNone(token.token)
         self.assertIsNotNone(token.expiration_date)
@@ -25,7 +25,7 @@ class TestUserAuthenticationUsecase(unittest.TestCase):
         userdata: UserData = UserData("nothorizon", "Halcyon441")
         #with self.assertRaises(Exception):
         try:
-            token: TokenData = self.userauthenticationusecase.handle_userdata(userdata)
+            token: TokenData = self.userauthenticationusecase.authenticate(userdata)
         except Exception as e:
             print(e)
 
@@ -34,7 +34,7 @@ class TestUserAuthenticationUsecase(unittest.TestCase):
         userdata: UserData = UserData("horizon", "notHalcyon441")
         #with self.assertRaises(Exception):
         try:
-            token: TokenData = self.userauthenticationusecase.handle_userdata(userdata)
+            token: TokenData = self.userauthenticationusecase.authenticate(userdata)
         except Exception as e:
             print(e)
 
