@@ -19,7 +19,7 @@ class UserAuthenticationUsecase():
         self.passwordhashgenerator: PasswordHashGenerator = passwordhashgenerator
         self.userauthentication: UserAuthentication = self.authenticationfactory.create_authentication()
 
-    def handle_userdata(self, userdata: UserData) -> TokenData:
+    def authenticate(self, userdata: UserData) -> TokenData:
         try:
             user: User = self.__create_user(userdata) #TODO: ID, Password, Token Exception -> wrap authentication exception
             token: Token = user.get_token() #OK

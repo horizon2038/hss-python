@@ -10,5 +10,5 @@ class UserFactoryImpl:
 
     def createuser(self, id: Id, hashed_password: HashedPassword, token: Token) -> User:
         user: User = UserImpl(id, hashed_password, token)
-        print("UserFactory: Create UserFactoryImpl")
+        print("UserFactory: Create UserImpl")
         return user

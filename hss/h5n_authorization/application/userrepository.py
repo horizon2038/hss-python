@@ -4,15 +4,22 @@ from domain.id import Id
 from domain.hashedpassword import HashedPassword
 from domain.token import Token
 from domain.user import User
+from factory.userfactory import UserFactory
 
 class UserRepository(Protocol):
-    def exists(self, id: Id) -> bool:
+    def __init__(self, userfactory: UserFactory):
         pass
 
-    def find_password(self, id: Id) -> HashedPassword:
+    def id_exists(self, id: Id) -> bool:
         pass
 
-    def find_token(self, id: Id) -> Token:
+    def token_exists(self, token: Token) -> bool:
+        pass
+
+    def retrieve_user_byid(self, id: Id) -> User:
+        pass
+
+    def retrieve_user_bytoken(self, token: Token) -> User:
         pass
 
     def add(self, user: User): #Create New User
