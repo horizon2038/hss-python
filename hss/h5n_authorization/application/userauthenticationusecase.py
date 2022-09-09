@@ -21,19 +21,21 @@ class UserAuthenticationUsecase():
 
     def authenticate(self, userdata: UserData) -> TokenData:
         try:
-            user: User = self.__create_user(userdata) #TODO: ID, Password, Token Exception -> wrap authentication exception
-            token: Token = user.get_token() #OK
-            tokendata: TokenData = self.__create_tokendata(token)
+            __id: Id = Id(userdata.id)
+            __hashed_password: HashedPassword = self.__create_hashed_password(userdata.password)
+            if not (self.userrepository.id_exists(__id)):
+                raise AuthenticationException()
+            user: User = self.userrepository.retrieve_user_byid(__id)
+            if not (UserAuthentication.authenticate(user, __hashed_password)):
+                raise AuthenticationException()
+            tokendata: TokenData = self.__create_tokendata(user.get_token())
             return tokendata
+
         except AuthenticationException as e:
             raise ApplicationException(str(e))
+
         finally:
             pass
-
-    def __create_user(self, userdata: UserData) -> User:
-        id: Id = Id(userdata.id)
-        hashed_password: HashedPassword = self.__create_hashed_password(userdata.password)
-        return self.userauthentication.authenticate(id, hashed_password)
     
     def __create_hashed_password(self, password: str) -> HashedPassword:
         password: Password = Password(password)

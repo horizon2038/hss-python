@@ -9,16 +9,14 @@ from domain.user import User
 from factory.userfactory import UserFactory
 
 class UserRepositoryMySQL(): 
-    def __init__(self, userfactory: UserFactory):
-        self.userfactory = userfactory
-
     def __connectDB(self):
         self.connection = MySQLdb.Connect(user='root', passwd='Halcyon441', host='localhost', db='h5nserver')
 
     def __createcursor(self):
         self.cursor = self.connection.cursor()
 
-    def __init__(self):
+    def __init__(self, userfactory: UserFactory):
+        self.userfactory = userfactory
         self.__connectDB()
         self.__createcursor()
 
@@ -28,13 +26,13 @@ class UserRepositoryMySQL():
         res = self.cursor.fetchone()
         return res[0]
 
-    def token_exists(self, token: Token) -> bool:
+    def token_exists(self, token: str) -> bool:
         query: str = "SELECT EXISTS(SELECT token FROM users WHERE token=%s)"
-        self.cursor.execute(query, (token.get_token(), ))
+        self.cursor.execute(query, (token, ))
         res = self.cursor.fetchone()
         return res[0]
 
-    def retrive_user_byid(self, id: Id) -> User:
+    def retrieve_user_byid(self, id: Id) -> User:
         query: str = "SELECT id, password, token, expiration_date FROM users WHERE id=%s"
         self.cursor.execute(query, (id.get_id(), ))
         res = self.cursor.fetchone()
@@ -43,9 +41,9 @@ class UserRepositoryMySQL():
         __token: Token = Token(res[2], res[3])
         return self.userfactory.createuser(__id, __hashed_password, __token)
 
-    def retrive_user_bytoken(self, token: Token) -> User:
+    def retrieve_user_bytoken(self, token: str) -> User:
         query: str = "SELECT id, password, token, expiration_date FROM users WHERE token=%s"
-        self.cursor.execute(query, (token.get_token(), ))
+        self.cursor.execute(query, (token, ))
         res = self.cursor.fetchone()
         __id: Id = Id(res[0])
         __hashed_password: HashedPassword = HashedPassword(res[1])
@@ -74,3 +72,14 @@ class UserRepositoryMySQL():
         query: str = "DELETE FROM users WHERE id=%s"
         self.cursor.execute(query, (id.get_id(), ))
         self.connection.commit()
+
+if __name__ == "__main__":
+    from factory.userfactoryimpl import UserFactoryImpl
+    userfactory: UserFactory = UserFactoryImpl()
+    repository: UserRepository = UserRepositoryMySQL(userfactory)
+    userid: Id = Id("horizon")
+    print(repository.id_exists(userid))
+    token: str = "96122f31c4ab6993621750b49315b4c671b9157aa6ea1bfefb086a154138267d"
+    print(repository.token_exists(token))
+    user: User = repository.retrieve_user_byid(userid)
+    print("id: {0} password: {1} token: {2} expiration: {3}".format(user.get_id().get_id(), user.get_password().get_password(), user.get_token().get_token(), user.get_token().get_expiration_date()))

@@ -13,13 +13,13 @@ class UserRepository(Protocol):
     def id_exists(self, id: Id) -> bool:
         pass
 
-    def token_exists(self, token: Token) -> bool:
+    def token_exists(self, token: str) -> bool:
         pass
 
     def retrieve_user_byid(self, id: Id) -> User:
         pass
 
-    def retrieve_user_bytoken(self, token: Token) -> User:
+    def retrieve_user_bytoken(self, token: str) -> User:
         pass
 
     def add(self, user: User): #Create New User

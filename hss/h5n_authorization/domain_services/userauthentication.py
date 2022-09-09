@@ -8,6 +8,6 @@ class UserAuthentication(Protocol):
     def __init__(self):
         pass
 
-    def authenticate(self, id: Id, hashed_password: HashedPassword) -> User:
+    def authenticate(self, user: User, hashed_password: HashedPassword) -> bool:
         pass
     

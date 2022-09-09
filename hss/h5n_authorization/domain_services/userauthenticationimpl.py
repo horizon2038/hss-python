@@ -6,40 +6,25 @@ from domain.token import Token
 from domain.user import User
 from domain.tokengenerator import TokenGenerator
 from domain_services.authenticationexception import AuthenticationException
-from application.userrepository import UserRepository
 from factory.userfactory import UserFactory
 
 class UserAuthenticationImpl():
-    def __init__(self, userrepository: UserRepository, userfactory: UserFactory, tokengenerator: TokenGenerator):
+    def __init__(self, userfactory: UserFactory, tokengenerator: TokenGenerator):
         #These are injected by the Factory, so there is no problem even if they are redundant.
-        self.userrepository: UserRepository = userrepository
         self.userfactory: UserFactory = userfactory
         self.tokengenerator: TokenGenerator = tokengenerator
 
-    def authenticate(self, id: Id, hashed_password: HashedPassword) -> User: #already hashed
-        if not (self.__check_user_data(id, hashed_password)):
-            print ("Authentication Failed")
-            raise AuthenticationException("Authentication Failed")
-
-        return self.__create_user(id, hashed_password)
-
-    def __check_user_data(self, id: Id, hashed_password: HashedPassword) -> bool:
-        if not (self.userrepository.userexists(id.get_id())):
-            print("Invalid Id")
-            return False
-
-        correct_password: HashedPassword = self.__generate_correct_password(id)
-
-        if not (correct_password.equals(hashed_password)):
-            print("Incorrect Password")
-            return False
-
+    def authenticate(self, user: User, hashed_password: HashedPassword) -> bool: #already hashed
+        self.__check_user_password(user.get_password(), hashed_password)
+        self.__update_token(user)
         return True
 
-    def __generate_correct_password(self, id: Id) -> HashedPassword:
-        correct_password: HashedPassword = self.userrepository.searchpassword_byuserid(id.get_id())
-        return HashedPassword(correct_password)
+    def __check_user_password(self, correct_password: HashedPassword, hashed_password: HashedPassword) -> bool:
+        if not (correct_password.equals(hashed_password)):
+            print ("Incorrect Password")
+            raise AuthenticationException("Incorrect Password")
+        return True
 
-    def __create_user(self, id: Id, hashed_password: HashedPassword) -> User:
-        token: Token = self.tokengenerator.generate_token()
-        return self.userfactory.createuser(id, hashed_password, token)
+    def __update_token(self, user: User):
+        __token: Token = self.tokengenerator.generate_token()
+        user.update_token(__token)

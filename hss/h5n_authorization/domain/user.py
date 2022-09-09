@@ -37,3 +37,6 @@ class User(Protocol):
 
     def get_token(self) -> Token:
         pass
+
+    def update_token(token: Token):
+        pass

@@ -23,5 +23,8 @@ class UserImpl():
     def get_token(self) -> Token:
         return self.token
 
+    def update_token(self, token: Token):
+        self.token = token
+
     def change_password(self, new_hashed_password: HashedPassword):
         self.hashed_password = new_hashed_password

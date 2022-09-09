@@ -10,6 +10,6 @@ class AuthenticationFactoryImpl():
         pass
 
     def create_authentication(self) -> UserAuthentication:
-        userauthentication: UserAuthentication = UserAuthenticationImpl(UserRepositoryMySQL(), UserFactoryImpl(), TokenGeneratorImpl())
+        userauthentication: UserAuthentication = UserAuthenticationImpl(UserFactoryImpl(), TokenGeneratorImpl())
         print("AuthenticationFactory: Create UserAuthenticationImpl")
         return userauthentication
