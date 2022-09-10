@@ -11,5 +11,4 @@ class UserAuthenticationInputportFactoryImpl:
 
     def create_authentication_inputport(self) -> UserAuthenticationInputport:
         userauthenticationinputport: UserAuthenticationInputport = UserAuthenticationUsecase(UserRepositoryMySQL(UserFactoryImpl()), AuthenticationFactoryImpl(), PasswordHashGeneratorImpl())
-        print("UserAuthenticationInputportFactory: Create UserAuthenticationInputport")
         return userauthenticationinputport

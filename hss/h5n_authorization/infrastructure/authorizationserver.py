@@ -38,6 +38,5 @@ class Token(Resource):
         return self.__repack_argument(args)
 
     def __repack_argument(self, args: any) -> dict:
-        print(args["grant_type"])
         inputdata: dict = {"grant_type": args["grant_type"], "username": args["username"], "password": args["password"], "scope": args["scope"]}
         return inputdata

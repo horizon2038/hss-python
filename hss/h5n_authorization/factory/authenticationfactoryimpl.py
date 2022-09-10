@@ -11,5 +11,4 @@ class AuthenticationFactoryImpl():
 
     def create_authentication(self) -> UserAuthentication:
         userauthentication: UserAuthentication = UserAuthenticationImpl(UserFactoryImpl(), TokenGeneratorImpl())
-        print("AuthenticationFactory: Create UserAuthenticationImpl")
         return userauthentication

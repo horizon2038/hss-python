@@ -1,3 +1,4 @@
+from domain.domainexception import DomainException
 from domain.id import Id
 from domain.password import Password
 from domain.hashedpassword import HashedPassword
@@ -29,8 +30,10 @@ class UserAuthenticationUsecase():
             tokendata: TokenData = self.__create_tokendata(__user.get_token())
             return tokendata
 
+        except DomainException as e:
+            raise ApplicationException(str(e))
+
         except AuthenticationException as e:
-            print(str(e))
             raise ApplicationException(str(e))
 
         finally:
