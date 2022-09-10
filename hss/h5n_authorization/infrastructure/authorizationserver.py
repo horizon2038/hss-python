@@ -1,6 +1,7 @@
 import json
+from os import abort
 from flask import Flask, request, jsonify
-from flask_restful import Api, Resource, reqparse
+from flask_restful import Api, Resource, reqparse, abort
 from typing import Protocol
 
 from application.userdata import UserData
@@ -23,7 +24,8 @@ class Token(Resource):
         except ApplicationException as e:
             error_message: str = str(e) 
             print("error: {}".format(error_message))
-            return jsonify({"error": error_message})
+            error_message = jsonify({"error": error_message})
+            return error_message
 
     def __init_parser(self) -> any:
         parser = reqparse.RequestParser()
