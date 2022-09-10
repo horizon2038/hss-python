@@ -1,3 +1,4 @@
+import json
 from flask import Flask, request, jsonify
 from flask_restful import Api, Resource, reqparse
 from typing import Protocol
@@ -20,7 +21,9 @@ class Token(Resource):
             return jsonify({"access_token": tokendata.token, "token_type": "bearer", "expires_in": tokendata.expires_in, "refresh_token": "None"})
         
         except ApplicationException as e:
-            print("error: {}".format(str(e)))
+            error_message: str = str(e) 
+            print("error: {}".format(error_message))
+            return jsonify({"error": error_message})
 
     def __init_parser(self) -> any:
         parser = reqparse.RequestParser()
