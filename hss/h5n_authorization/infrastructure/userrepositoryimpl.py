@@ -33,7 +33,7 @@ class UserRepositoryMySQL():
         return res[0]
 
     def retrieve_user_byid(self, id: Id) -> User:
-        query: str = "SELECT id, password, token, expiration_date FROM users WHERE id=%s"
+        query: str = "SELECT id, password, token, expires_in FROM users WHERE id=%s"
         self.cursor.execute(query, (id.get_id(), ))
         res = self.cursor.fetchone()
         __id: Id = Id(res[0])
@@ -42,7 +42,7 @@ class UserRepositoryMySQL():
         return self.userfactory.createuser(__id, __hashed_password, __token)
 
     def retrieve_user_bytoken(self, token: str) -> User:
-        query: str = "SELECT id, password, token, expiration_date FROM users WHERE token=%s"
+        query: str = "SELECT id, password, token, expires_in FROM users WHERE token=%s"
         self.cursor.execute(query, (token, ))
         res = self.cursor.fetchone()
         __id: Id = Id(res[0])
@@ -51,21 +51,21 @@ class UserRepositoryMySQL():
         return self.userfactory.createuser(__id, __hashed_password, __token)
 
     def add(self, user: User):
-        query: str = "INSERT INTO users (id, password, token, expiration_date) VALUES (%s, %s, %s, %s)"
+        query: str = "INSERT INTO users (id, password, token, expires_in) VALUES (%s, %s, %s, %s)"
         __id: str = user.get_id()
         __hashed_password: str = user.get_password()
         __token: str = user.get_token().get_token()
-        __expiration_date: int = user.get_token().get_expiration_date()
-        self.cursor.execute(query, (__id, __hashed_password, __token, __expiration_date))
+        __expires_in: int = user.get_token().get_expires_in()
+        self.cursor.execute(query, (__id, __hashed_password, __token, __expires_in))
         self.connection.commit()
 
     def store(self, user: User):
-        query: str = "UPDATE users SET password=%s, token=%s, expiration_date=%s WHERE id=%s"
+        query: str = "UPDATE users SET password=%s, token=%s, expires_in=%s WHERE id=%s"
         __id: str = user.get_id()
         __hashed_password: str = user.get_password()
         __token: str = user.get_token().get_token()
-        __expiration_date: int = user.get_token().get_expiration_date()
-        self.cursor.execute(query, (__hashed_password, __token, __expiration_date, __id))
+        __expires_in: int = user.get_token().get_expires_in()
+        self.cursor.execute(query, (__hashed_password, __token, __expires_in, __id))
         self.connection.commit()
 
     def delete(self, id: Id):
@@ -82,4 +82,4 @@ if __name__ == "__main__":
     token: str = "96122f31c4ab6993621750b49315b4c671b9157aa6ea1bfefb086a154138267d"
     print(repository.token_exists(token))
     user: User = repository.retrieve_user_byid(userid)
-    print("id: {0} password: {1} token: {2} expiration: {3}".format(user.get_id().get_id(), user.get_password().get_password(), user.get_token().get_token(), user.get_token().get_expiration_date()))
+    print("id: {0} password: {1} token: {2} expiration: {3}".format(user.get_id().get_id(), user.get_password().get_password(), user.get_token().get_token(), user.get_token().get_expires_in()))

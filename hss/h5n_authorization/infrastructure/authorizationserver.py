@@ -5,17 +5,22 @@ from typing import Protocol
 from application.userdata import UserData
 from application.tokendata import TokenData
 from application.userauthenticationinputport import UserAuthenticationInputport
+from application.applicationexception import ApplicationException
 
 class Token(Resource):
     def __init__(self, user_authentication_usecase: UserAuthenticationInputport):
         self.user_authentication_usecase: UserAuthenticationInputport = user_authentication_usecase
 
     def post(self):
-        parser: any = self.__init_parser()
-        inputdata: dict = self.__load_argument(parser)
-        userdata: UserData = UserData(str(inputdata["username"]), str(inputdata["password"]))
-        tokendata: TokenData = self.user_authentication_usecase.authenticate(userdata)
-        return jsonify(tokendata.token, tokendata.expiration_date)
+        try:
+            parser: any = self.__init_parser()
+            inputdata: dict = self.__load_argument(parser)
+            userdata: UserData = UserData(str(inputdata["username"]), str(inputdata["password"]))
+            tokendata: TokenData = self.user_authentication_usecase.authenticate(userdata)
+            return jsonify({"access_token": tokendata.token, "token_type": "bearer", "expires_in": tokendata.expires_in, "refresh_token": "None"})
+        
+        except ApplicationException as e:
+            print("error: {}".format(str(e)))
 
     def __init_parser(self) -> any:
         parser = reqparse.RequestParser()

@@ -1,13 +1,13 @@
 class Token():
-    def __init__(self, token: str, expiration_date: int): #expiration date is Epoch time
+    def __init__(self, token: str, expires_in: int): #expiration date is Epoch time
         self.__token = self.__check_token(token)
-        self.__expiration_date = self.__check_expiration_date(expiration_date)
+        self.__expires_in = self.__check_expires_in(expires_in)
 
     def get_token(self):
         return self.__token
 
-    def get_expiration_date(self):
-        return self.__expiration_date
+    def get_expires_in(self):
+        return self.__expires_in
 
     def __check_token(self, token: str):
         if token is None:
@@ -17,8 +17,8 @@ class Token():
         else:
             return token
 
-    def __check_expiration_date(self, expiration_date: int):
-        if expiration_date is None:
-            raise Exception("ExpirationDate is none")
+    def __check_expires_in(self, expires_in: int):
+        if expires_in is None:
+            raise Exception("Expires_in is none")
         else:
-            return expiration_date
+            return expires_in

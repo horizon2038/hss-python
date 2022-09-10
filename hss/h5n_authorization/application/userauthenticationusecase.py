@@ -30,6 +30,7 @@ class UserAuthenticationUsecase():
             return tokendata
 
         except AuthenticationException as e:
+            print(str(e))
             raise ApplicationException(str(e))
 
         finally:
@@ -50,5 +51,5 @@ class UserAuthenticationUsecase():
         return True
 
     def __create_tokendata(self, token: Token) -> TokenData:
-        tokendata: TokenData = TokenData(token.get_token(), token.get_expiration_date())
+        tokendata: TokenData = TokenData(token.get_token(), token.get_expires_in())
         return tokendata

@@ -13,5 +13,5 @@ class TokenGeneratorImpl():
         hextoken: str = secrets.token_hex()
         now: int = int(time.time())
         expiration_amount: int = 2592000 #30 days
-        expiration_date = now + expiration_amount
-        return Token(hextoken, expiration_date)
+        expires_in = now + expiration_amount
+        return Token(hextoken, expires_in)

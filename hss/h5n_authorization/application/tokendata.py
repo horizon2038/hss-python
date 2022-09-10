@@ -1,4 +1,4 @@
 class TokenData:
-    def __init__(self, token: str, expiration_date: int):
+    def __init__(self, token: str, expires_in: int):
         self.token: str = token
-        self.expiration_date: int = expiration_date
+        self.expires_in: int = expires_in

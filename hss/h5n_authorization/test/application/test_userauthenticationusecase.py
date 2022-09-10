@@ -16,9 +16,9 @@ class TestUserAuthenticationUsecase(unittest.TestCase):
         print("\033[05;44m" + "test_authentication_success" + "\033[0m")
         userdata: UserData = UserData("horizon", "Halcyon441")
         token: TokenData = self.userauthenticationusecase.authenticate(userdata)
-        print("token: {} expiration_date: {}".format(token.token, token.expiration_date))
+        print("token: {} expires_in: {}".format(token.token, token.expires_in))
         self.assertIsNotNone(token.token)
-        self.assertIsNotNone(token.expiration_date)
+        self.assertIsNotNone(token.expires_in)
 
     def test_authentication_invalid_user_id(self):
         print("\033[05;44m" + "test_authentication_invalid_user_id" + "\033[0m")
