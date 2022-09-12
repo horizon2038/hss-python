@@ -70,6 +70,8 @@ userauthentication <. userauthenticationusecase
 authorizationserver <. app
 userrepository <|. userrepositoryimpl
 userauthenticationinputport <. authorizationserver
+userdata <. authorizationserver
+tokendata <. authorizationserver
 
 domain <.up. domain_service
 application <.up. infrastructure
