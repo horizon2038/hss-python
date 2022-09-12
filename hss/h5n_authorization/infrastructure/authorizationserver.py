@@ -1,8 +1,6 @@
-import json
 from os import abort
 from flask import Flask, request, jsonify
 from flask_restful import Api, Resource, reqparse, abort
-from typing import Protocol
 
 from application.userdata import UserData
 from application.tokendata import TokenData

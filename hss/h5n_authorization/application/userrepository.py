@@ -22,7 +22,7 @@ class UserRepository(Protocol):
     def retrieve_user_bytoken(self, token: str) -> User:
         pass
 
-    def add(self, user: User): #Create New User
+    def add(self, user: User):
         pass
 
     def store(self, user: User): #Updates can only be made from the aggregate.
