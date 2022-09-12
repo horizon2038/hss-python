@@ -52,8 +52,8 @@ class UserRepositoryMySQL():
 
     def add(self, user: User):
         query: str = "INSERT INTO users (id, password, token, expires_in) VALUES (%s, %s, %s, %s)"
-        __id: str = user.get_id()
-        __hashed_password: str = user.get_password()
+        __id: str = user.get_id().get_id()
+        __hashed_password: str = user.get_password().get_password()
         __token: str = user.get_token().get_token()
         __expires_in: int = user.get_token().get_expires_in()
         self.cursor.execute(query, (__id, __hashed_password, __token, __expires_in))
@@ -72,14 +72,3 @@ class UserRepositoryMySQL():
         query: str = "DELETE FROM users WHERE id=%s"
         self.cursor.execute(query, (id.get_id(), ))
         self.connection.commit()
-
-if __name__ == "__main__":
-    from factory.userfactoryimpl import UserFactoryImpl
-    userfactory: UserFactory = UserFactoryImpl()
-    repository: UserRepository = UserRepositoryMySQL(userfactory)
-    userid: Id = Id("horizon")
-    print(repository.id_exists(userid))
-    token: str = "96122f31c4ab6993621750b49315b4c671b9157aa6ea1bfefb086a154138267d"
-    print(repository.token_exists(token))
-    user: User = repository.retrieve_user_byid(userid)
-    print("id: {0} password: {1} token: {2} expiration: {3}".format(user.get_id().get_id(), user.get_password().get_password(), user.get_token().get_token(), user.get_token().get_expires_in()))
