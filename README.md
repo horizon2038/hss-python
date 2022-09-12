@@ -15,10 +15,19 @@ Python3.10
 After implementing the web framework and database code to be used (Flask+Flask-RESTful+MySQL code is implemented by default), just run main.py
 
 ## Usage
+example:
+```
+python3 main.py
+```
 
 ### h5n_authorization
 Resource Owner Pasword Credentials Grant in OAuth2.
-After running, POST the values of "grant_type", "username", "password", and "scope" to the server address/oauth2/token in the form format, and the token (token, expires_in) will be returned.
+After running, POST the values of "grant_type", "username", "password", and "scope" to the server-address:port-number/oauth2/token in the form format, and the token (token, expires_in) will be returned.
+
+example:
+```
+curl -XPOST -d grant_type="password" -d username="horizon" -d password="Halcyon441" -d scope="api" 192.168.1.9:5000/oauth2/token
+```
 
 ## Licence
 Written under the MIT License.
