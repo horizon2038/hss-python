@@ -2,7 +2,7 @@ from domain.id import Id
 from domain.hashedpassword import HashedPassword
 from domain.token import Token
 from domain.user import User
-from domain.tokengenerator import TokenGenerator
+from domain_services.tokengenerator import TokenGenerator
 from domain_services.authenticationexception import AuthenticationException
 from factory.userfactory import UserFactory
 

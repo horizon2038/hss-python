@@ -1,4 +1,3 @@
-import hashlib
 import MySQLdb
 
 from application.userrepository import UserRepository

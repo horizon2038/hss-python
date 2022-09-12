@@ -1,0 +1,78 @@
+@startuml
+left to right direction
+title authorization-class-diagram
+package domain {
+    class id<<valueobject>>
+    class password<<valueobject>>
+    class hashedpassword<<valueobject>>
+    class token<<valueobject>> {
+        -str token
+        -int expires_in
+    }
+    interface user
+    class userimpl<<aggregate root>>
+    
+    user <|.. userimpl
+
+    userimpl o-- id : 1
+    userimpl o-- hashedpassword : 1
+    userimpl o-- token : 1
+
+}
+
+package domain_service {
+    interface passwordhashgenerator
+    class passwordhashgeneratorimpl
+    interface tokengenerator
+    class tokengeneratorimpl
+    interface userauthentication
+    class userauthenticationimpl
+    
+    passwordhashgenerator <|.. passwordhashgeneratorimpl
+    tokengenerator <|.. tokengeneratorimpl
+    userauthentication <|.. userauthenticationimpl
+    tokengenerator <.. userauthenticationimpl
+}
+
+package application {
+    interface userauthenticationinputport
+    class userauthenticationusecase
+    interface userrepository
+    class userdata<<dto>>
+    class tokendata<<dto>>
+
+    userauthenticationinputport <|.. userauthenticationusecase
+    userrepository <.. userauthenticationusecase
+    userdata <.. userauthenticationusecase
+    tokendata <.. userauthenticationusecase
+}
+
+package infrastructure {
+    class userrepositoryimpl
+    class authorizationserver<<flask>>
+    class app<<flask>>
+}
+
+password <.up. passwordhashgenerator
+hashedpassword <. passwordhashgenerator
+user <.up. userauthentication
+token <. userauthentication
+hashedpassword <. userauthentication
+tokengenerator <. userauthentication
+
+user <. userauthenticationusecase
+id <. userauthenticationusecase
+password <. userauthenticationusecase
+hashedpassword <. userauthenticationusecase
+passwordhashgenerator <. userauthenticationusecase
+userauthentication <. userauthenticationusecase
+
+authorizationserver <. app
+userrepository <|. userrepositoryimpl
+userauthenticationinputport <. authorizationserver
+
+domain <.up. domain_service
+application <.up. infrastructure
+
+
+@enduml

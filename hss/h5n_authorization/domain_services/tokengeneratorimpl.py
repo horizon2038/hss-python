@@ -2,8 +2,8 @@ import secrets
 import time
 from xmlrpc.client import DateTime
 
-from domain.tokengenerator import TokenGenerator #Interface
 from domain.token import Token
+from domain_services.tokengenerator import TokenGenerator #Interface
 
 class TokenGeneratorImpl():
     def __init__(self):

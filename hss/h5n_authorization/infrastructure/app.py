@@ -3,7 +3,6 @@ from flask_restful import Api
 
 from application.userauthenticationinputport import UserAuthenticationInputport
 from infrastructure.authorizationserver import Token
-from infrastructure.ipaddressloader import IPAddressLoader
 
 class ServerCore():
     def __init__(self, user_authentication_usecase: UserAuthenticationInputport):

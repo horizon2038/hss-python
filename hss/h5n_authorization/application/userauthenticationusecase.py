@@ -15,8 +15,8 @@ from factory.authenticationfactory import AuthenticationFactory
 
 from factory.userfactory import UserFactory
 from factory.userfactoryimpl import UserFactoryImpl
-from domain.tokengenerator import TokenGenerator
-from domain.tokengeneratorimpl import TokenGeneratorImpl
+from domain_services.tokengenerator import TokenGenerator
+from domain_services.tokengeneratorimpl import TokenGeneratorImpl
 
 class UserAuthenticationUsecase():
     def __init__(self, userrepository: UserRepository, authenticationfactory: AuthenticationFactory, passwordhashgenerator: PasswordHashGenerator):
